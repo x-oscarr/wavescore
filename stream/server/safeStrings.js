@@ -1,0 +1,37 @@
+// Function to make paths safe that are used in an input
+var safeStringInput = function(string) {
+  var safeString = string;
+
+  // Safen the string
+  // \ will be \\
+  safeString = safeString.replace(/\\/g, '\\\\');
+
+  // : will be \:
+  safeString = safeString.replace(/\:/g, '\\:');
+
+  // Return safe string
+  return safeString;
+};
+
+// Function to make string safe that are used in a filter
+var safeStringFilter = function(string) {
+  var safeString = string;
+
+  // Safen the string
+  // \ will be \\
+  safeString = safeString.replace(/\\/g, '\\\\');
+
+  // : will be \:
+  safeString = safeString.replace(/\:/g, '\\:');
+
+  // ' will be \'
+  safeString = safeString.replace(/\'/g, "\\'");
+
+  // Return safe string
+  return safeString;
+};
+
+export default {
+  forInput: safeStringInput,
+  forFilter: safeStringFilter
+};
