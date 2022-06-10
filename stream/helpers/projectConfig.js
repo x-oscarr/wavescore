@@ -25,7 +25,7 @@ export default async (projectPath) => {
     if (fs.existsSync(configJsonPath)) {
         return getJsonConfig(configJsonPath)
     } else if (fs.existsSync(configJsPath)) {
-        return getJsConfig(configJsPath)
+        return await getJsConfig(configJsPath)
     } else {
         throw new Error(`${chalk.red('Error did not find a config.json at:')} ${configJsonPath} 😞\n`);
     }

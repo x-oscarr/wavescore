@@ -1,7 +1,7 @@
 import fs from "fs";
 import chalk from "chalk";
 import appRoot from "app-root-path";
-import streamConfig from "../../configs/stream.config.js"
+import sc from "../../services/index.js"
 import path from "path";
 import {fileURLToPath} from "url";
 
@@ -37,7 +37,7 @@ export default (projectName) => {
 
   // If the call occurs inside the app folder, then specify the project folder from the configurations
   const projectPath = appRoot.path === process.cwd()
-    ? streamConfig.projectsFolder + projectName
+    ? sc.config.stream.projectsFolder + projectName
     : projectName;
 
   console.log(chalk.green(`🎵 Generating a new stream project: ${chalk.blue(projectName)} 🎵`));

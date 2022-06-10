@@ -7,7 +7,7 @@ import os from "os";
 
 // Async function to optimize a gif using ffmpeg
 // http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html
-const getOptimizedGif = async (gifPath, config, errorCallback) => {
+export default async (gifPath, config, errorCallback) => {
   const tempPalPath = upath.join(os.tmpdir(), `/live-stream-radio-gif-pal-${Date.now().toString()}.png`);
   const palAppliedGif = upath.join(os.tmpdir(), `/live-stream-radio-gif-with-pal-${Date.now().toString()}.gif`);
 
@@ -77,5 +77,3 @@ const getOptimizedGif = async (gifPath, config, errorCallback) => {
 
   return files[0].destinationPath;
 };
-
-export default getOptimizedGif;

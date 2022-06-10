@@ -1,30 +1,25 @@
-import { readFileSync } from "fs";
-import { program } from "commander";
-import start from "./stream/start.js";
-import create from "./stream/create/index.js";
+import http from "http";
+import Thread from "./stream/thread.js";
+import Project from "./stream/project.js";
+import webApp from "./api/app.js";
 
-const cli = async () => {
-    const packageJson = JSON.parse(readFileSync('package.json', 'utf8'));
-    program
-        // .name(packageJson.name)
-        .version(packageJson.version)
-        .description(packageJson.description);
-
-    program
-        .command('start')
-        .description('Start the stream using the passed directory')
-        .argument('[project]', 'Name or path to project folder')
-        .option('-o, --output [stream output location]', 'Override the "stream_url/stream_key" parameters')
-        .option('--no-web', 'Start the stream without web server')
-        .action(await start)
-
-    program
-        .command('create')
-        .description('Create a new stream project')
-        .argument('<project>', 'Name or path to project folder')
-        .action(create);
-
-    program.parse();
+const webserver = (thread) => {
+    console.log('Web server started');
+    const port = process.env.PORT || '3000';
+    webApp.set('port', port);
+    webApp.set('thread', thread);
+    const server = http.createServer(webApp);
+    server.listen(port);
 }
 
-await cli();
+// Async task to start the radio
+export default async (projectName, options) => {
+    const project = new Project(projectName)
+    const thread = new Thread(await project.init());
+
+    // Run webserver
+    options.web && webserver(thread);
+
+    // Start our stream
+    thread.run();
+};

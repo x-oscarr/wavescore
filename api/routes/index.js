@@ -1,9 +1,12 @@
 import express from "express";
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/', function (req, res) {
+  const task = req.app.get('thread').activeTask;
+
+  res.status(200).send({
+
+  });
 });
 
 export default router;
