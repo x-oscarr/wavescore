@@ -12,12 +12,8 @@ export default async (gifPath, config, errorCallback) => {
   const palAppliedGif = upath.join(os.tmpdir(), `/live-stream-radio-gif-with-pal-${Date.now().toString()}.gif`);
 
   const getFfmpeg = input => {
-    let ffmpegCommand = ffmpeg();
-    ffmpegCommand.setFfmpegPath(ffmpegPath);
-    // Set our ffmpeg path if we have one
-    if (config.ffmpeg_path) {
-      ffmpegCommand = ffmpegCommand.setFfmpegPath(config.ffmpeg_path);
-    }
+    let ffmpegCommand = ffmpeg()
+        .setFfmpegPath(config.render.ffmpeg_path || ffmpegPath);
 
     return ffmpegCommand.input(input);
   };
@@ -46,7 +42,7 @@ export default async (gifPath, config, errorCallback) => {
       // Equivalient to -lavi or -filter_complex
       .complexFilter(
         // Scale the gif
-        `scale=w=${config.max_gif_size}:h=${config.max_gif_size}` +
+        `scale=w=${config.render.max_gif_size}:h=${config.render.max_gif_size}` +
           // Maintain the aspect ratio from the previous scale, and decrease whichever breaks it
           `:force_original_aspect_ratio=decrease` +
           // Other cool gif optimization stuff, see linked blog post

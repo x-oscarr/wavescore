@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import inquirer from "inquirer";
 import appRoot from "app-root-path";
-import streamConfig from "../../configs/stream.config.js";
+import sc from "../../services/index.js";
 
 const getProjectPrompt = () => {
     const getDirectories = (path) => {
@@ -20,10 +20,10 @@ const getProjectPrompt = () => {
         type: 'list',
         name: 'project',
         message: 'What project do you want to start?',
-        choices: getDirectories(streamConfig.projectsFolder),
+        choices: getDirectories(sc.config.stream.projectsFolder),
     })
         .then((answers) => {
-            return path.join(streamConfig.projectsFolder, answers.project);
+            return path.join(sc.config.stream.projectsFolder, answers.project);
         });
 }
 
@@ -31,7 +31,7 @@ export default async (projectName) => {
     let projectPath;
     if(appRoot.path === process.cwd()) {
         projectPath = projectName
-            ? streamConfig.projectsFolder + projectName
+            ? sc.config.stream.projectsFolder + projectName
             : await getProjectPrompt();
     } else {
         projectPath = projectName

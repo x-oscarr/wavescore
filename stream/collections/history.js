@@ -1,4 +1,4 @@
-import Task from "../task.js";
+import AbstractTask from "../tasks/abstractTask.js";
 
 export default class History {
     _list;
@@ -10,7 +10,7 @@ export default class History {
     }
 
     add(task) {
-        if(!task instanceof Task) {
+        if(!task instanceof AbstractTask) {
             throw new Error('Wrong task instance');
         }
         this._list.slice(0, 100).unshift(task);

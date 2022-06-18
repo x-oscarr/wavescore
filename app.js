@@ -2,6 +2,7 @@ import http from "http";
 import Thread from "./stream/thread.js";
 import Project from "./stream/project.js";
 import webApp from "./api/app.js";
+import sc from "./services/index.js";
 
 const webserver = (thread) => {
     console.log('Web server started');
@@ -14,12 +15,15 @@ const webserver = (thread) => {
 
 // Async task to start the radio
 export default async (projectName, options) => {
-    const project = new Project(projectName)
+    const project = new Project(projectName, options.output);
+
+    sc.get('logger').init(project.name);
+
     const thread = new Thread(await project.init());
 
     // Run webserver
     options.web && webserver(thread);
 
     // Start our stream
-    thread.run();
+    thread.start();
 };

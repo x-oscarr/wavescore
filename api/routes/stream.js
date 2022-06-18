@@ -2,7 +2,9 @@ import express from "express";
 var router = express.Router();
 
 router.get('/', function (req, res) {
-    res.status(204).send(null)
+    res.status(204).send({
+
+    });
 });
 
 router.post('/start', function (req, res) {
@@ -16,12 +18,22 @@ router.post('/stop', function(req, res, next) {
         .catch(e => res.status(503).send(e));
 });
 
-router.post('/skip', function (req, res) {
-    req.app.get('thread').skip();
+router.post('/next', function (req, res) {
+    req.app.get('thread').next();
     res.status(204).send(null)
 });
 
-router.get('/healthz', function (req, res) {
+router.post('/prev', function (req, res) {
+    req.app.get('thread').prev();
+    res.status(204).send(null)
+});
+
+router.post('/repeat', function (req, res) {
+   req.app.get('thread').repeat();
+   res.status(204).send(null);
+});
+
+router.head('/healthz', function (req, res) {
     res.status(204).send(null)
 });
 

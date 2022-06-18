@@ -1,4 +1,4 @@
-import Task from "../task.js";
+import AbstractTask from "../tasks/abstractTask.js";
 
 export default class Queue {
     _list;
@@ -8,7 +8,7 @@ export default class Queue {
     }
 
     add(task) {
-        if(!task instanceof Task) {
+        if(!task instanceof AbstractTask) {
             throw new Error('Wrong task instance');
         }
         this._list.unshift(task);
@@ -20,7 +20,7 @@ export default class Queue {
 
     preRender(thread) {
         const next = this._list[this._list.length - 1];
-        next && next.status === Task.STATUS_NOT_READY && next.prepare(thread);
+        next && next.status === AbstractTask.STATUS_NOT_READY && next.prepare(thread);
     }
 
     isEmpty() {

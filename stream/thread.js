@@ -1,53 +1,56 @@
 import chalk from "chalk";
-import isRunning from "is-running";
-import Task from "./task.js";
 import History from "./collections/history.js";
 import Queue from "./collections/queue.js";
+import TaskFactory from "./tasks/taskFactory.js";
+import AbstractTask from "./tasks/abstractTask.js";
 
 class Thread {
   _project;
+  _factory;
   _history;
   _queue;
   _flow;
   _activeTask;
-  _isSkipping;
+  _silent;
 
   constructor(project) {
     this._project = project;
+    this._factory = new TaskFactory(project);
     this._history = new History(this.project.config.api.number_of_history_items)
     this._queue = new Queue();
     this._flow = undefined;
-    this._isSkipping = false;
   }
 
-  async run () {
-    this._activeTask = this.queue.pull(this._errorCallback) || new Task(this.project);
+  async start () {
+    this._silent = false;
+    this._activeTask = this.queue.pull(this._errorCallback) || this._factory.createTask();
 
     switch (this.activeTask.status) {
-      case Task.STATUS_NOT_READY:
+      case AbstractTask.STATUS_NOT_READY:
         await this.activeTask.prepare(this._errorCallback);
         break;
-      case Task.STATUS_PREPARING:
+      case AbstractTask.STATUS_PREPARING:
         await this.activeTask.promise;
         break;
     }
 
     if(this.queue.isEmpty) {
-      this.queue.add(new Task(this.project));
+      this.queue.add(this._factory.createTask());
     }
 
-    this.activeTask.start(this);
+    this.activeTask.run(this);
     this.queue.preRender(this._errorCallback);
   }
 
-  async skip() {
-    this._isSkipping = true;
-    this.activeTask.stop()
-    this.run();
+  async next() {
+    this._silent = true;
+    this.activeTask.kill();
+    this.start();
   }
 
   async stop() {
-    this.activeTask.finish();
+    this._silent = true;
+    this.activeTask.kill();
   }
 
   get activeTask() {
@@ -67,10 +70,7 @@ class Thread {
   }
 
   _errorCallback(err, stdout, stderr) {
-    if(this._isSkipping) {
-      this._isSkipping = false;
-      return;
-    }
+    if(this._silent) return
 
     // Check if we should respond to the error
     console.log(chalk.red('ffmpeg stderr:'), '\n\n', stderr);
@@ -86,7 +86,7 @@ class Thread {
 
   _endCallback() {
     this.activeTask.finish();
-    this.run();
+    this.start();
   }
 }
 

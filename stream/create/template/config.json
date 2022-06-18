@@ -1,101 +1,145 @@
 {
   "stream_url": "rtmp://a.rtmp.youtube.com/live2/$stream_key",
   "stream_key": "",
-  "ffmpeg_path": "",
-  "video_codec": "libx264",
-  "audio_codec": "aac",
-  "audio_bit_rate": "128k",
-  "audio_sample_rate": "44100",
-  "normalize_audio": true,
-  "video_height": "720",
-  "video_width": "1280",
-  "video_bit_rate": "2500k",
-  "video_fps": "25",
-  "bufsize": "2500k",
-  "crf": "28",
-  "preset": "superfast",
-  "threads": 2,
-  "max_gif_size": "720",
+  "render": {
+    "ffmpeg_path": "",
+    "video_codec": "libx264",
+    "audio_codec": "aac",
+    "audio_bit_rate": "128k",
+    "audio_sample_rate": "44100",
+    "normalize_audio": true,
+    "video_height": "720",
+    "video_width": "1280",
+    "video_bit_rate": "2500k",
+    "video_fps": "25",
+    "bufsize": "2500k",
+    "crf": "28",
+    "preset": "superfast",
+    "threads": 2,
+    "max_gif_size": "720"
+  },
   "api": {
     "host": "localhost",
     "port": "8000",
     "key": "super-secret-api-key",
     "number_of_history_items": 100
   },
-  "radio": {
-    "audio_directory": "./audio",
-    "video_directory": "./video",
-    "overlay": {
+  "scenes": {
+    "radio": {
       "enabled": true,
-      "font_path": "./fonts/Lato-Regular.ttf",
-      "title": {
+      "frequency": 0.7,
+      "render_type": "radio",
+      "audio_directory": "./scenes/radio/audio",
+      "video_directory": "./scenes/radio/video",
+      "overlay": {
         "enabled": true,
-        "text": "Live Stream Radio, 24/7 Open Source Radio",
-        "font_color": "#FFFFFF",
-        "font_border": "#000000",
-        "font_size": "10",
-        "enable_scroll": true,
-        "font_scroll_speed": "20",
-        "position_x": "0",
-        "position_y": "5"
-      },
-      "artist": {
-        "enabled": true,
-        "label": "Artist: ",
-        "font_color": "#FFFFFF",
-        "font_border": "#000000",
-        "font_size": "10",
-        "position_x": "2",
-        "position_y": "15"
-      },
-      "album": {
-        "enabled": false,
-        "label": "Album: ",
-        "font_color": "#FFFFFF",
-        "font_border": "#000000",
-        "font_size": "10",
-        "position_x": "2",
-        "position_y": "25"
-      },
-      "song": {
-        "enabled": true,
-        "label": "Song: ",
-        "font_color": "#FFFFFF",
-        "font_border": "#000000",
-        "font_size": "10",
-        "position_x": "2",
-        "position_y": "25"
-      },
-      "image": {
-        "enabled": true,
-        "image_path": "./live-stream-radio-overlay-image.png",
-        "position_x": 0,
-        "position_y": 0
+        "font_path": "./fonts/Lato-Regular.ttf",
+        "title": {
+          "enabled": true,
+          "text": "Live Stream Radio, 24/7 Open Source Radio",
+          "font_color": "#FFFFFF",
+          "font_border": "#000000",
+          "font_size": "10",
+          "enable_scroll": true,
+          "font_scroll_speed": "20",
+          "position_x": "0",
+          "position_y": "5"
+        },
+        "image": {
+          "enabled": true,
+          "image_path": "./scenes/radio/live-stream-radio-overlay-image.png",
+          "position_x": 0,
+          "position_y": 0
+        },
+        "artist": {
+          "enabled": true,
+          "label": "Artist: ",
+          "font_color": "#FFFFFF",
+          "font_border": "#000000",
+          "font_size": "10",
+          "position_x": "2",
+          "position_y": "15"
+        },
+        "album": {
+          "enabled": false,
+          "label": "Album: ",
+          "font_color": "#FFFFFF",
+          "font_border": "#000000",
+          "font_size": "10",
+          "position_x": "2",
+          "position_y": "25"
+        },
+        "song": {
+          "enabled": true,
+          "label": "Song: ",
+          "font_color": "#FFFFFF",
+          "font_border": "#000000",
+          "font_size": "10",
+          "position_x": "2",
+          "position_y": "25"
+        }
       }
-    }
-  },
-  "interlude": {
-    "enabled": "true",
-    "frequency": "0.2",
-    "audio_directory": "./interludes/audio",
-    "video_directory": "./interludes/video",
-    "overlay": {
+    },
+    "movies": {
       "enabled": true,
-      "font_path": "./fonts/Lato-Regular.ttf",
-      "title": {
+      "frequency": 0.2,
+      "render_type": "video",
+      "video_directory": "./scenes/movies/video",
+      "overlay": {
         "enabled": true,
-        "text": "Please wait, music shall resume shortly...",
-        "font_color": "#FFFFFF",
-        "font_border": "#000000",
-        "font_size": "10",
-        "position_x": "2",
-        "position_y": "5"
-      },
-      "image": {
+        "font_path": "./fonts/Lato-Regular.ttf",
+        "title": {
+          "enabled": true,
+          "text": "Live Stream Radio, 24/7 Open Source Radio",
+          "font_color": "#FFFFFF",
+          "font_border": "#000000",
+          "font_size": "10",
+          "enable_scroll": true,
+          "font_scroll_speed": "20",
+          "position_x": "0",
+          "position_y": "5"
+        },
+        "image": {
+          "enabled": true,
+          "image_path": "./scenes/movies/live-stream-radio-overlay-image.png",
+          "position_x": 0,
+          "position_y": 0
+        },
+        "video": {
+          "enabled": true,
+          "label": "Movie: ",
+          "font_color": "#FFFFFF",
+          "font_border": "#000000",
+          "font_size": "10",
+          "position_x": "2",
+          "position_y": "15"
+        }
+      }
+    },
+    "interlude": {
+      "enabled": true,
+      "frequency": 0.1,
+      "render_type": "radio",
+      "audio_directory": "./scenes/interludes/audio",
+      "video_directory": "./scenes/interludes/video",
+      "overlay": {
         "enabled": true,
-        "image_path": "./live-stream-radio-overlay-image.png",
-        "position_x": 0,
-        "position_y": 0
+        "font_path": "./fonts/Lato-Regular.ttf",
+        "title": {
+          "enabled": true,
+          "text": "Please wait, music shall resume shortly...",
+          "font_color": "#FFFFFF",
+          "font_border": "#000000",
+          "font_size": "10",
+          "position_x": "2",
+          "position_y": "5"
+        },
+        "image": {
+          "enabled": true,
+          "image_path": "./scenes/interludes/live-stream-radio-overlay-image.png",
+          "position_x": 0,
+          "position_y": 0
+        }
       }
     }
   }

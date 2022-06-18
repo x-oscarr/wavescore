@@ -13,26 +13,24 @@
   },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@ffprobe-installer/ffprobe": "^1.4.1",
     "app-root-path": "^3.0.0",
     "chalk": "^2.4.1",
     "cli-progress": "^2.1.0",
     "commander": "^9.3.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
-    "edit-json-file": "^1.1.0",
+    "docsify-cli": "^4.4.4",
     "express": "~4.16.1",
-    "fastify": "^3.29.0",
-    "fastify-formbody": "^5.3.0",
     "find": "^0.2.9",
     "fluent-ffmpeg": "^2.1.2",
-    "fs-extra": "^7.0.0",
     "imagemin": "^8.0.1",
     "imagemin-gifsicle": "github:imagemin/imagemin-gifsicle#main",
     "inquirer": "^8.2.4",
     "is-running": "^2.1.0",
-    "minimist": "^1.2.0",
     "morgan": "~1.9.1",
     "music-metadata": "^3.1.0",
-    "upath": "^1.1.0"
+    "upath": "^1.1.0",
+    "winston": "^3.7.2"
   }
 }

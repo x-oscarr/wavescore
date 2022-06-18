@@ -44,7 +44,7 @@ export default (projectName) => {
 
   // Create project folder
   console.log('📁', chalk.magenta(`Creating a directory at ${projectPath} ...`));
-  fs.existsSync(projectPath) && fs.mkdirSync(projectPath, { recursive: true });
+  fs.existsSync(projectPath) || fs.mkdirSync(projectPath, { recursive: true });
 
   // Fill the project directory with the template
   createDirectoryContents(`${__dirname}/template`, projectPath);

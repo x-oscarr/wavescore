@@ -1,21 +1,20 @@
 // Overlay text for the stream
 import safeStrings from "./safeStrings.js";
 
-const getOverlayTextString = async (path, config, typeKey, metadata) => {
+const getOverlayTextString = async (path, config, overlayConfig, metadata) => {
   // Create our overlay
   // Note: Positions and sizes are done relative to the input video width and height
   // Therefore position x/y is a percentage, like CSS style.
   // Font size is simply just a fraction of the width
   let overlayTextFilterString = '';
-  if (config[typeKey].overlay && config[typeKey].overlay.enabled) {
-    const overlayConfigObject = config[typeKey].overlay;
+  if (overlayConfig && overlayConfig.enabled) {
     const overlayTextItems = [];
 
-    const fontPath = `${path}${overlayConfigObject.font_path}`;
+    const fontPath = `${path}${overlayConfig.font_path}`;
 
     // Check if we have a title option
-    if (overlayConfigObject.title && overlayConfigObject.title.enabled) {
-      const itemObject = overlayConfigObject.title;
+    if (overlayConfig.title && overlayConfig.title.enabled) {
+      const itemObject = overlayConfig.title;
       const safeText = safeStrings.forFilter(itemObject.text);
       let itemString =
         `drawtext=text='${safeText}'` +
@@ -34,9 +33,9 @@ const getOverlayTextString = async (path, config, typeKey, metadata) => {
     }
 
     // Check if we have an artist option
-    if (overlayConfigObject.artist && overlayConfigObject.artist.enabled) {
-      const itemObject = overlayConfigObject.artist;
-      const safeText = safeStrings.forFilter(itemObject.label + metadata.common.artist);
+    if (overlayConfig.artist && overlayConfig.artist.enabled && metadata) {
+      const itemObject = overlayConfig.artist;
+      const safeText = safeStrings.forFilter(itemObject.label + metadata.artist);
       let itemString =
         `drawtext=text='${safeText}'` +
         `:fontfile=${fontPath}` +
@@ -50,9 +49,9 @@ const getOverlayTextString = async (path, config, typeKey, metadata) => {
     }
 
     // Check if we have an album option
-    if (overlayConfigObject.album && overlayConfigObject.album.enabled) {
-      const itemObject = overlayConfigObject.album;
-      const safeText = safeStrings.forFilter(itemObject.label + metadata.common.album);
+    if (overlayConfig.album && overlayConfig.album.enabled && metadata) {
+      const itemObject = overlayConfig.album;
+      const safeText = safeStrings.forFilter(itemObject.label + metadata.album);
       let itemString =
         `drawtext=text='${safeText}'` +
         `:fontfile=${fontPath}` +
@@ -66,9 +65,9 @@ const getOverlayTextString = async (path, config, typeKey, metadata) => {
     }
 
     // Check if we have an artist option
-    if (overlayConfigObject.song && overlayConfigObject.song.enabled) {
-      const itemObject = overlayConfigObject.song;
-      const safeText = safeStrings.forFilter(itemObject.label + metadata.common.title);
+    if (overlayConfig.song && overlayConfig.song.enabled && metadata) {
+      const itemObject = overlayConfig.song;
+      const safeText = safeStrings.forFilter(itemObject.label + metadata.title);
       let itemString =
         `drawtext=text='${safeText}'` +
         `:fontfile=${fontPath}` +
